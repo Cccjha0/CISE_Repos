@@ -39,7 +39,9 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 export const getServerSideProps: GetServerSideProps<ArticlesProps> = async () => {
   try {
-    const response = await axios.get(process.env.BACKEND_URI + '/api/articles'); // 更新为后端 Vercel URL
+    //11111111111111111test
+    console.log(`${process.env.BACKEND_URI}/api/articles`);
+    const response = await axios.get(`${process.env.BACKEND_URI}/api/articles`, { timeout: 7000 }); // 更新为后端 Vercel URL
     const articles: ArticlesInterface[] = response.data.map((article: ArticlesInterface) => ({
       id: article.id?.toString() || `temp-${Date.now()}-${Math.random()}`, // 确保 id 非空
       title: article.title || '',

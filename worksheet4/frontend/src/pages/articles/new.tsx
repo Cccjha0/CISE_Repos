@@ -14,7 +14,7 @@ const NewDiscussion = () => {
   const submitNewArticle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post(process.env.BACKEND_URI + '/api/articles', {
+      const response = await axios.post(`${process.env.BACKEND_URI}/api/articles`, {
         title,
         authors: authors.join(', '), // 数组转字符串
         source,

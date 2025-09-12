@@ -18,7 +18,7 @@ export default function SubmissionForm() {
   // onSubmit 使用 FormData 类型
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post(process.env.BACKEND_URI + '/api/articles', {
+      const response = await axios.post(`${process.env.BACKEND_URI}/api/articles`, {
         title: data.title,
         authors: data.authors,
         source: data.source,
