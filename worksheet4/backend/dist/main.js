@@ -39,7 +39,7 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.enableCors({ origin: process.env.FRONTEND, credentials: true });
+    app.enableCors({ origin: 'http://localhost:3000', credentials: true });
     const port = process.env.PORT || 5000;
     await app.listen(port, () => console.log(`服务器运行在端口 ${port}`));
 }

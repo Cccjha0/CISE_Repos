@@ -1,6 +1,5 @@
 import React from 'react';
 
-// 定义 ArticlesInterface，与 index.tsx 一致
 interface ArticlesInterface {
   id: string;
   title: string;
@@ -28,7 +27,7 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
     </thead>
     <tbody>
       {data.map((row) => (
-        <tr key={row.id}> {/* 使用 row.id 而非索引 */}
+        <tr key={row.id}>
           {headers.map((header) => (
             <td key={header.key}>{row[header.key]}</td>
           ))}

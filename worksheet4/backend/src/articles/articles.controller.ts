@@ -16,9 +16,9 @@ export class ArticlesController {
     return this.articlesService.create(article);
   }
 
-  // 可选：获取单篇文章
+  // Optional: @Get(':id') for single article (from Worksheet 2, step 14)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Article | null> {
-    return this.articlesService.findOne(id);
+    return this.articlesService.findOne(id);  // Add findOne to service if needed
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import formStyles from '../../styles/Form.module.scss'; // Ensure styles exist
 
-// 定义表单数据类型，匹配后端 schema
 interface FormData {
   title: string;
   authors: string;
@@ -15,48 +15,46 @@ interface FormData {
 export default function SubmissionForm() {
   const { register, handleSubmit, reset } = useForm<FormData>();
 
-  // onSubmit 使用 FormData 类型
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post(`${process.env.BACKEND_URI}/api/articles`, {
+      const response = await axios.post('http://localhost:5000/api/articles', {
         title: data.title,
         authors: data.authors,
         source: data.source,
         pubyear: data.pubyear,
         doi: data.doi,
-        claim: data.linked_discussion, // 映射到 claim
-        evidence: 'Pending', // 默认值，可根据需求调整
+        claim: 'Test-Driven Development', // Assuming TDD for now; adjust per dropdown
+        evidence: data.linked_discussion,
       });
-      console.log('提交成功:', response.data);
-      alert('文章提交成功！');
-      reset(); // 清空表单
+      console.log('Article submitted:', response.data);
+      reset(); // Clear form after submission
     } catch (error) {
-      console.error('提交失败:', error);
-      alert('提交失败，请重试！');
+      console.error('Error submitting article:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('title', { required: true })} placeholder="Title" />
+    <form onSubmit={handleSubmit(onSubmit)} className={formStyles.form}>
+      <input {...register('title')} placeholder="Title" required />
       <p>
-        <input {...register('authors', { required: true })} placeholder="Authors" />
+        <input {...register('authors')} placeholder="Authors" required />
       </p>
       <p>
-        <input {...register('source', { required: true })} placeholder="Source" />
+        <input {...register('source')} placeholder="Source" required />
       </p>
       <p>
-        <input {...register('pubyear', { required: true })} placeholder="Publication Year" />
+        <input {...register('pubyear')} placeholder="Publication Year" type="number" required />
       </p>
       <p>
         <input {...register('doi')} placeholder="DOI" />
       </p>
-      <select {...register('linked_discussion', { required: true })}>
+      <select {...register('linked_discussion')} required>
         <option value="">Select SE practice...</option>
-        <option value="TDD">TDD</option>
-        <option value="Mob Programming">Mob Programming</option>
+        <option value="Strong support">TDD - Strong support</option>
+        <option value="Weak support">TDD - Weak support</option>
+        <option value="Weak against">TDD - Weak against</option>
       </select>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit Article" />
     </form>
   );
 }

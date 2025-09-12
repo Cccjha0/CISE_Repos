@@ -12,23 +12,23 @@ const NewDiscussion = () => {
   const [linkedDiscussion, setLinkedDiscussion] = useState("");
 
   const submitNewArticle = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post(`${process.env.BACKEND_URI}/api/articles`, {
-        title,
-        authors: authors.join(', '), // 数组转字符串
-        source,
-        pubyear: pubYear.toString(),
-        doi,
-        claim: summary, // 映射到claim
-        evidence: linkedDiscussion, // 映射到evidence
-      });
-      console.log('创建成功:', response.data);
-      // 可添加重定向或清空表单
-    } catch (error) {
-      console.error('错误:', error);
-    }
-  };
+  event.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:5000/api/articles', {
+      title,
+      authors: authors.join(', '), // 数组转字符串
+      source,
+      pubyear: pubYear.toString(),
+      doi,
+      claim: summary, // 映射到claim
+      evidence: linkedDiscussion, // 映射到evidence
+    });
+    console.log('创建成功:', response.data);
+    // 可添加重定向或清空表单
+  } catch (error) {
+    console.error('错误:', error);
+  }
+};
 
   // Some helper methods for the authors array
 
@@ -155,4 +155,3 @@ const NewDiscussion = () => {
 };
 
 export default NewDiscussion;
-
